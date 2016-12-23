@@ -14,6 +14,10 @@
 		4DB75F0D1E0C2CBE00C37E7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DB75F0B1E0C2CBE00C37E7F /* LaunchScreen.storyboard */; };
 		4DB75F151E0C2CD500C37E7F /* VPNManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB75F141E0C2CD500C37E7F /* VPNManager.swift */; };
 		4DC7B5241E0D0DDF00426BEC /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7B5231E0D0DDF00426BEC /* Observer.swift */; };
+		4DC7B5261E0D119300426BEC /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7B5251E0D119300426BEC /* KeychainWrapper.swift */; };
+		4DC7B5281E0D128D00426BEC /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7B5271E0D128D00426BEC /* ConnectionManager.swift */; };
+		4DC7B52A1E0D139600426BEC /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7B5291E0D139600426BEC /* Credentials.swift */; };
+		4DC7B52C1E0D1A6500426BEC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7B52B1E0D1A6500426BEC /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,10 @@
 		4DB75F0E1E0C2CBE00C37E7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DB75F141E0C2CD500C37E7F /* VPNManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNManager.swift; sourceTree = "<group>"; };
 		4DC7B5231E0D0DDF00426BEC /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
+		4DC7B5251E0D119300426BEC /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		4DC7B5271E0D128D00426BEC /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		4DC7B5291E0D139600426BEC /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		4DC7B52B1E0D1A6500426BEC /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +66,8 @@
 		4DB75F011E0C2CBE00C37E7F /* SimpleVpn */ = {
 			isa = PBXGroup;
 			children = (
+				4DC7B52B1E0D1A6500426BEC /* CustomButton.swift */,
+				4DC7B5251E0D119300426BEC /* KeychainWrapper.swift */,
 				4DB75F021E0C2CBE00C37E7F /* AppDelegate.swift */,
 				4DB75F041E0C2CBE00C37E7F /* ViewController.swift */,
 				4DB75F061E0C2CBE00C37E7F /* Main.storyboard */,
@@ -66,6 +76,8 @@
 				4DB75F0E1E0C2CBE00C37E7F /* Info.plist */,
 				4DB75F141E0C2CD500C37E7F /* VPNManager.swift */,
 				4DC7B5231E0D0DDF00426BEC /* Observer.swift */,
+				4DC7B5271E0D128D00426BEC /* ConnectionManager.swift */,
+				4DC7B5291E0D139600426BEC /* Credentials.swift */,
 			);
 			path = SimpleVpn;
 			sourceTree = "<group>";
@@ -143,9 +155,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DB75F051E0C2CBE00C37E7F /* ViewController.swift in Sources */,
+				4DC7B5281E0D128D00426BEC /* ConnectionManager.swift in Sources */,
 				4DC7B5241E0D0DDF00426BEC /* Observer.swift in Sources */,
+				4DC7B52A1E0D139600426BEC /* Credentials.swift in Sources */,
+				4DC7B52C1E0D1A6500426BEC /* CustomButton.swift in Sources */,
 				4DB75F151E0C2CD500C37E7F /* VPNManager.swift in Sources */,
 				4DB75F031E0C2CBE00C37E7F /* AppDelegate.swift in Sources */,
+				4DC7B5261E0D119300426BEC /* KeychainWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

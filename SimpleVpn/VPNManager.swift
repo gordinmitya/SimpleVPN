@@ -10,7 +10,7 @@ import Foundation
 import NetworkExtension
 
 final class VPNManager: NSObject {
-    static let sharedManager: VPNManager = {
+    static let shared: VPNManager = {
         let instance = VPNManager()
         instance.loadProfile(callback: nil)
         instance.manager.localizedDescription = Bundle.main.infoDictionary![kCFBundleNameKey as String] as? String
@@ -19,6 +19,13 @@ final class VPNManager: NSObject {
     }()
     
     let manager: NEVPNManager = { NEVPNManager.shared() }()
+    public var isDisconnected: Bool {
+        get {
+            return (status == .disconnected)
+                || (status == .reasserting)
+                || (status == .invalid)
+        }
+    }
     public var status: NEVPNStatus { get { return manager.connection.status } }
     public let statusEvent = Subject<NEVPNStatus>()
     
@@ -31,13 +38,13 @@ final class VPNManager: NSObject {
             object: nil)
     }
     
-    public func connect(server: String, account: String, passwordRef: Data, enableDemand: Bool, onError: @escaping ()->Void) {
+    public func connect(server: String, account: String, passwordRef: Data, enableDemand: Bool, onError: @escaping (String)->Void) {
         loadProfile() { success in
             if !success {
-                onError()
+                onError("Can't load profile")
                 return
             }
-            VPNManager.sharedManager.connectIKEv2(
+            self.connectIKEv2(
                 server: server,
                 account: account,
                 passwordRef: passwordRef,
@@ -78,7 +85,7 @@ final class VPNManager: NSObject {
             }
         }
     }
-    private func connectIKEv2(server: String, account: String, passwordRef: Data, enableDemand: Bool, onError: @escaping ()->Void) {
+    private func connectIKEv2(server: String, account: String, passwordRef: Data, enableDemand: Bool, onError: @escaping (String)->Void) {
         let p = NEVPNProtocolIKEv2()
         p.authenticationMethod = NEVPNIKEAuthenticationMethod.none
         p.useExtendedAuthentication = true
@@ -96,17 +103,17 @@ final class VPNManager: NSObject {
         }
         saveProfile { success in
             if !success {
-                onError()
+                onError("Unable to save vpn profile")
                 return
             }
             self.loadProfile() { success in
                 if !success {
-                    onError()
+                    onError("Unable to load profile")
                     return
                 }
                 let result = self.startVPNTunnel()
                 if !result {
-                    onError()
+                    onError("Can't connect")
                 }
             }
         }
