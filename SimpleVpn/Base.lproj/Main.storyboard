@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOT-7o-3rc">
-                                <rect key="frame" x="72.5" y="159" width="230.5" height="349"/>
+                                <rect key="frame" x="72.5" y="36" width="230.5" height="349"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjk-XL-gyv">
                                         <rect key="frame" x="8" y="53" width="50" height="21"/>
@@ -34,7 +34,7 @@
                                         <rect key="frame" x="8" y="82" width="214.5" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="next"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T63-3o-H9m">
                                         <rect key="frame" x="8" y="120" width="79" height="21"/>
@@ -46,7 +46,7 @@
                                         <rect key="frame" x="8" y="149" width="214.5" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="in6-CT-3iS">
                                         <rect key="frame" x="8" y="187" width="74" height="21"/>
@@ -57,7 +57,8 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kLa-wQ-1bz">
                                         <rect key="frame" x="8" y="216" width="214.5" height="30"/>
                                         <nil key="textColor"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wxW-q9-cNm" customClass="CustomButton" customModule="SimpleVpn" customModuleProvider="target">
                                         <rect key="frame" x="40" y="301" width="150" height="40"/>
@@ -131,8 +132,8 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="WOT-7o-3rc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9aQ-3x-FoK"/>
                             <constraint firstItem="WOT-7o-3rc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dhl-tc-bMF"/>
+                            <constraint firstItem="WOT-7o-3rc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="hIg-SK-mE7"/>
                         </constraints>
                     </view>
                     <connections>

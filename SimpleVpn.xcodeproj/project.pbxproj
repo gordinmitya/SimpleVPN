@@ -13,6 +13,7 @@
 		4DB75F0A1E0C2CBE00C37E7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB75F091E0C2CBE00C37E7F /* Assets.xcassets */; };
 		4DB75F0D1E0C2CBE00C37E7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DB75F0B1E0C2CBE00C37E7F /* LaunchScreen.storyboard */; };
 		4DB75F151E0C2CD500C37E7F /* VPNManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB75F141E0C2CD500C37E7F /* VPNManager.swift */; };
+		4DC48B601E0E575100A9AEA4 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC48B5F1E0E575100A9AEA4 /* NetworkExtension.framework */; };
 		4DC7B5241E0D0DDF00426BEC /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7B5231E0D0DDF00426BEC /* Observer.swift */; };
 		4DC7B5261E0D119300426BEC /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7B5251E0D119300426BEC /* KeychainWrapper.swift */; };
 		4DC7B5281E0D128D00426BEC /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7B5271E0D128D00426BEC /* ConnectionManager.swift */; };
@@ -29,6 +30,8 @@
 		4DB75F0C1E0C2CBE00C37E7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DB75F0E1E0C2CBE00C37E7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DB75F141E0C2CD500C37E7F /* VPNManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNManager.swift; sourceTree = "<group>"; };
+		4DC48B5F1E0E575100A9AEA4 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		4DC48B611E0E575200A9AEA4 /* SimpleVpn.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleVpn.entitlements; sourceTree = "<group>"; };
 		4DC7B5231E0D0DDF00426BEC /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		4DC7B5251E0D119300426BEC /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		4DC7B5271E0D128D00426BEC /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
@@ -41,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DC48B601E0E575100A9AEA4 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +56,7 @@
 			children = (
 				4DB75F011E0C2CBE00C37E7F /* SimpleVpn */,
 				4DB75F001E0C2CBE00C37E7F /* Products */,
+				4DC48B5E1E0E575100A9AEA4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +71,7 @@
 		4DB75F011E0C2CBE00C37E7F /* SimpleVpn */ = {
 			isa = PBXGroup;
 			children = (
+				4DC48B611E0E575200A9AEA4 /* SimpleVpn.entitlements */,
 				4DC7B52B1E0D1A6500426BEC /* CustomButton.swift */,
 				4DC7B5251E0D119300426BEC /* KeychainWrapper.swift */,
 				4DB75F021E0C2CBE00C37E7F /* AppDelegate.swift */,
@@ -80,6 +86,14 @@
 				4DC7B5291E0D139600426BEC /* Credentials.swift */,
 			);
 			path = SimpleVpn;
+			sourceTree = "<group>";
+		};
+		4DC48B5E1E0E575100A9AEA4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DC48B5F1E0E575100A9AEA4 /* NetworkExtension.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,7 +128,13 @@
 				TargetAttributes = {
 					4DB75EFE1E0C2CBE00C37E7F = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = AFTBRP3P6S;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.VPNLite = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -284,6 +304,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleVpn/SimpleVpn.entitlements;
+				DEVELOPMENT_TEAM = AFTBRP3P6S;
 				INFOPLIST_FILE = SimpleVpn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.gordinmitya.SimpleVpn;
@@ -296,6 +318,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleVpn/SimpleVpn.entitlements;
+				DEVELOPMENT_TEAM = AFTBRP3P6S;
 				INFOPLIST_FILE = SimpleVpn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.gordinmitya.SimpleVpn;

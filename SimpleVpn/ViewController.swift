@@ -9,7 +9,7 @@
 import UIKit
 import NetworkExtension
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var serverText: UITextField!
     @IBOutlet weak var accountText: UITextField!
@@ -21,13 +21,30 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        for field in inputFields {
+            field.delegate = self
+        }
+        
         vpnStateChanged(status: VPNManager.shared.status)
+        VPNManager.shared.statusEvent.attach(self, ViewController.vpnStateChanged)
         
         let credentials = ConnectionManager.shared.loadCredentials()
         serverText.text = credentials.server
         accountText.text = credentials.account
         passwordText.text = credentials.password
         ondemandSwitch.isOn = ConnectionManager.shared.loadDemand()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (textField === serverText) {
+            accountText.becomeFirstResponder()
+        } else if (textField === accountText) {
+            passwordText.becomeFirstResponder()
+        } else {
+            connectClick()
+        }
+        
+        return true
     }
     
     func vpnStateChanged(status: NEVPNStatus) {

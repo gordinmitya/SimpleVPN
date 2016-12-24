@@ -39,11 +39,7 @@ final class VPNManager: NSObject {
     }
     
     public func connect(server: String, account: String, passwordRef: Data, enableDemand: Bool, onError: @escaping (String)->Void) {
-        loadProfile() { success in
-            if !success {
-                onError("Can't load profile")
-                return
-            }
+        loadProfile() { _ in
             self.connectIKEv2(
                 server: server,
                 account: account,
