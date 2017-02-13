@@ -12,9 +12,8 @@ import NetworkExtension
 final class VPNManager: NSObject {
     static let shared: VPNManager = {
         let instance = VPNManager()
-        instance.loadProfile(callback: nil)
         instance.manager.localizedDescription = Bundle.main.infoDictionary![kCFBundleNameKey as String] as? String
-        instance.manager.isEnabled = true
+        instance.loadProfile(callback: nil)
         return instance
     }()
     
@@ -97,6 +96,7 @@ final class VPNManager: NSObject {
             manager.onDemandRules = [NEOnDemandRuleConnect()]
             manager.isOnDemandEnabled = true
         }
+        self.manager.isEnabled = true
         saveProfile { success in
             if !success {
                 onError("Unable to save vpn profile")
