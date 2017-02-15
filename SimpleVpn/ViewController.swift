@@ -14,6 +14,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var serverText: UITextField!
     @IBOutlet weak var accountText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet weak var pskSwitch: UISwitch!
+    @IBOutlet weak var pskText: UITextField!
     @IBOutlet var inputFields: [UITextField]!
     @IBOutlet weak var ondemandSwitch: UISwitch!
     @IBOutlet weak var connectButton: CustomButton!
@@ -28,11 +30,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         vpnStateChanged(status: VPNManager.shared.status)
         VPNManager.shared.statusEvent.attach(self, ViewController.vpnStateChanged)
         
-        let credentials = ConnectionManager.shared.loadCredentials()
-        serverText.text = credentials.server
-        accountText.text = credentials.account
-        passwordText.text = credentials.password
-        ondemandSwitch.isOn = ConnectionManager.shared.loadDemand()
+        let config = Configuration.loadFromDefaults()
+        serverText.text = config.server
+        accountText.text = config.account
+        passwordText.text = config.password
+        ondemandSwitch.isOn = config.onDemand
+        pskSwitch.isOn = config.pskEnabled
+        pskText.text = config.psk
+        pskText.isEnabled = config.pskEnabled
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -40,15 +45,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
             accountText.becomeFirstResponder()
         } else if (textField === accountText) {
             passwordText.becomeFirstResponder()
+        } else if (textField === pskText && pskSwitch.isOn) {
+            passwordText.becomeFirstResponder()
         } else {
             connectClick()
         }
-        
         return true
     }
     
     func vpnStateChanged(status: NEVPNStatus) {
-        changeControlEnabled(enabled: VPNManager.shared.isDisconnected)
+        changeControlEnabled(state: VPNManager.shared.isDisconnected)
         switch status {
         case .disconnected, .invalid, .reasserting:
             connectButton.setTitle("Connect", for: .normal)
@@ -61,25 +67,34 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func changeControlEnabled(enabled: Bool) {
+    func changeControlEnabled(state: Bool) {
         for i in inputFields {
-            i.isEnabled = enabled
+            i.isEnabled = state
         }
-        ondemandSwitch.isEnabled = enabled
+        pskSwitch.isEnabled = state
+        pskText.isEnabled = pskSwitch.isOn
+        ondemandSwitch.isEnabled = state
+    }
+    
+    @IBAction func pskSwitchChanged(_ sender: UISwitch) {
+        pskText.isEnabled = sender.isOn
     }
     
     @IBAction func connectClick() {
         if (VPNManager.shared.isDisconnected) {
-            let credentials = Credentials(
+            let config = Configuration(
                 server: serverText.text ?? "",
                 account: accountText.text ?? "",
-                password: passwordText.text ?? "")
-            ConnectionManager.shared.connect(credentials: credentials, onDemand: ondemandSwitch.isOn) { error in
+                password: passwordText.text ?? "",
+                onDemand: ondemandSwitch.isOn,
+                psk: pskSwitch.isOn ? pskText.text : nil)
+            VPNManager.shared.connectIKEv2(config: config) { error in
                 let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             }
+            config.saveToDefaults()
         } else {
-            ConnectionManager.shared.disconnect()
+            VPNManager.shared.disconnect()
         }
     }
 }

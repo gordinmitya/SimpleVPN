@@ -36,17 +36,6 @@ final class VPNManager: NSObject {
             name: NSNotification.Name.NEVPNStatusDidChange,
             object: nil)
     }
-    
-    public func connect(server: String, account: String, passwordRef: Data, enableDemand: Bool, onError: @escaping (String)->Void) {
-        loadProfile() { _ in
-            self.connectIKEv2(
-                server: server,
-                account: account,
-                passwordRef: passwordRef,
-                enableDemand: enableDemand,
-                onError: onError)
-        }
-    }
     public func disconnect(completionHandler: (()->Void)? = nil) {
         manager.onDemandRules = []
         manager.isOnDemandEnabled = false
@@ -80,36 +69,51 @@ final class VPNManager: NSObject {
             }
         }
     }
-    private func connectIKEv2(server: String, account: String, passwordRef: Data, enableDemand: Bool, onError: @escaping (String)->Void) {
+    public func connectIKEv2(config: Configuration, onError: @escaping (String)->Void) {
         let p = NEVPNProtocolIKEv2()
-        p.authenticationMethod = NEVPNIKEAuthenticationMethod.none
-        p.useExtendedAuthentication = true
-        p.serverAddress = server
-        p.remoteIdentifier = server
+        if config.pskEnabled {
+            p.authenticationMethod = NEVPNIKEAuthenticationMethod.sharedSecret
+        } else {
+            p.authenticationMethod = NEVPNIKEAuthenticationMethod.none
+        }
+        p.serverAddress = config.server
         p.disconnectOnSleep = false
         p.deadPeerDetectionRate = NEVPNIKEv2DeadPeerDetectionRate.medium
-        p.localIdentifier = "VPN"
-        p.username = account
-        p.passwordReference = passwordRef
-        manager.protocolConfiguration = p
-        if enableDemand {
-            manager.onDemandRules = [NEOnDemandRuleConnect()]
-            manager.isOnDemandEnabled = true
-        }
-        self.manager.isEnabled = true
-        saveProfile { success in
-            if !success {
-                onError("Unable to save vpn profile")
-                return
+        p.username = config.account
+        p.passwordReference = config.getPasswordRef()
+        p.sharedSecretReference = config.getPSKRef()
+        p.disableMOBIKE = false
+        p.disableRedirect = false
+        p.enableRevocationCheck = false
+        p.enablePFS = false
+        p.useExtendedAuthentication = true
+        p.useConfigurationAttributeInternalIPSubnet = false
+        
+        // two lines bellow may depend of your server configuration
+        p.remoteIdentifier = config.server
+        p.localIdentifier = config.account
+        
+        loadProfile { _ in
+            self.manager.protocolConfiguration = p
+            if config.onDemand {
+                self.manager.onDemandRules = [NEOnDemandRuleConnect()]
+                self.manager.isOnDemandEnabled = true
             }
-            self.loadProfile() { success in
+            self.manager.isEnabled = true
+            self.saveProfile { success in
                 if !success {
-                    onError("Unable to load profile")
+                    onError("Unable to save vpn profile")
                     return
                 }
-                let result = self.startVPNTunnel()
-                if !result {
-                    onError("Can't connect")
+                self.loadProfile() { success in
+                    if !success {
+                        onError("Unable to load profile")
+                        return
+                    }
+                    let result = self.startVPNTunnel()
+                    if !result {
+                        onError("Can't connect")
+                    }
                 }
             }
         }
