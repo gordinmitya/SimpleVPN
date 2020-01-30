@@ -64,6 +64,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             connectButton.setTitle("Connecting...", for: .normal)
         case .disconnecting:
             connectButton.setTitle("Disconnecting...", for: .normal)
+        @unknown default:
+            connectButton.setTitle("Connect", for: .normal)
         }
     }
     
