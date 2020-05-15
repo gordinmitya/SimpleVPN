@@ -7,7 +7,7 @@ Many thanks to [@hamzaozturk](https://github.com/hamzaozturk) for maintaining.
 
 ## Demo server
 
-To test the connection I would recommend to lunch your own server. With docker, it is as simple as a run single command. Here is great docker image for that [hwdsl2/docker-ipsec-vpn-server](https://github.com/hwdsl2/docker-ipsec-vpn-server).
+To test the connection I would recommend to launch your own server. With docker, it is as simple as a run single command. Here is great docker image for that [hwdsl2/docker-ipsec-vpn-server](https://github.com/hwdsl2/docker-ipsec-vpn-server).
 
 **Deprecated**
 Credentials for testing you can get after registration in account settings on [HidemanVPN site](hideman.net).
